@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ObjectRepository_LoginPage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Acertus_MetroLoad_Automation_v001</a> &gt; <a href="index.source.html" class="el_package">com.Acertus_MetroLoad.automation.objRepo</a> &gt; <span class="el_source">ObjectRepository_LoginPage.java</span></div><h1>ObjectRepository_LoginPage.java</h1><pre class="source lang-java linenums">/* Name: ObjectRepository_LoginPage 
+ * Description: This script is Central Hub for Reusable Global Locators
+ * Developed By: Radhe Singh
+ * Automation Architect: Radhe Singh
+ */
+package com.Acertus_MetroLoad.automation.objRepo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+
+<span class="fc" id="L15">public class ObjectRepository_LoginPage {</span>
+	
+	
+
+	
+	//login
+		@FindBy(xpath=&quot;//input[@name='email']&quot;) 
+		public WebElement userID;
+		@FindBy(xpath=&quot;//input[@name='password']&quot;)
+		public WebElement userPwd;
+		@FindBy(xpath=&quot;//button[@id='loginButton']&quot;)
+		public WebElement login_btn;
+	
+	//Logout webElements
+		
+		@FindBy(xpath=&quot;//title[contains(text(),'Loads')]&quot;)
+		public WebElement login_title;
+		//(//a[@href='#'])[6]
+		//(//a[contains(text(),'Automation Test')])[3]/span
+		//(//li[@class='dropdown'])[3]/a
+		//(//a[@href='#'])[6]
+		//(//li[@class='dropdown'])[3]/a[@class='dropdown-toggle']
+		//(//li[@class='dropdown'])[3]/a[contains(text(),'Automation Test')]
+		@FindBy(xpath=&quot;(//li[@class='dropdown'])[3]/a[contains(text(),'Automation Test')]&quot;)
+		public WebElement automationTest_drpdown;
+		//(//li[@class='dropdown'])[3]//ul/li/a[contains(text(),'Logout')]
+		@FindBy(xpath=&quot;(//li[@class='dropdown'])[3]//ul/li/a[contains(text(),'Logout')]&quot;)
+		public WebElement logout_lnk;
+		
+		//Search ID page elements
+		@FindBy(xpath=&quot;(//a[contains(text(),'Search ID')])[3]&quot;)
+		public WebElement searhID_btn;
+		@FindBy(xpath=&quot;//input[@id='search-by-id-field']&quot;)
+		public WebElement loadID_txtbox;
+		@FindBy(xpath=&quot;//button[@id='search-by-id-button']&quot;)
+		public WebElement searchByID_btn;
+		
+	//select product
+	@FindBy(how =How.ID, using=&quot;search&quot;)
+	public WebElement searchbtn;
+	@FindBy(xpath=&quot;//h1[contains(text(),'Load Unavailable')]&quot;)
+	public WebElement unavail_loadmsg;
+	@FindBy(xpath=&quot;//button[contains(text(),'Load Board')]&quot;)
+	public WebElement unavail_loadmsg_loadBoard_btn;
+	
+	
+	
+	
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

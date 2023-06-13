@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExcelUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Acertus_MetroLoad_Automation_v001</a> &gt; <a href="index.source.html" class="el_package">com.Acertus_MetroLoad.automation.excelReader</a> &gt; <span class="el_source">ExcelUtils.java</span></div><h1>ExcelUtils.java</h1><pre class="source lang-java linenums">/* Name: ExcelUtils 
+ * Description: This script is to read the data's from TestData and Config file
+ * Developed By: Radhe Singh
+ * Automation Architect: Radhe Singh
+  */
+package com.Acertus_MetroLoad.automation.excelReader;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+<span class="fc" id="L20">public class ExcelUtils {</span>
+
+	public static String testCellValue;
+	public static String testDataSheetPath;
+	public static String testConfigSheetPath;
+	public static String userNameCellValue;
+	public static String passwordCellValue;
+	public static String urlCellValue;
+	public static String browserCellValue;
+	public Integer rowValue;
+
+	// ******READING CLASS WITH FLAG STATUS &quot;Y&quot;*****
+	public static List&lt;String&gt; excelReadTestCase() throws IOException {
+
+<span class="nc" id="L34">		String path = System.getProperty(&quot;user.dir&quot;);</span>
+<span class="nc" id="L35">		testDataSheetPath = (path</span>
+				+ &quot;//src//main//java//com//Acertus_MetroLoad//automation//data//MTRL_Testdata.xlsx&quot;);
+
+<span class="nc" id="L38">		List&lt;String&gt; list = new ArrayList&lt;String&gt;();</span>
+<span class="nc" id="L39">		File f = new File(testDataSheetPath);</span>
+<span class="nc" id="L40">		FileInputStream fis = new FileInputStream(f);</span>
+<span class="nc" id="L41">		Workbook wb = new XSSFWorkbook(fis);</span>
+<span class="nc" id="L42">		Sheet tocSheet = wb.getSheet(&quot;TOC&quot;);</span>
+<span class="nc" id="L43">		int numberOfRows = tocSheet.getPhysicalNumberOfRows();</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">		for (int i = 1; i &lt; numberOfRows; i++) {</span>
+
+<span class="nc" id="L46">			Row datarow = tocSheet.getRow(i);</span>
+<span class="nc" id="L47">			Cell flagstatuscell = datarow.getCell(2);</span>
+<span class="nc" id="L48">			String flagstatuscellValuestr = flagstatuscell.getStringCellValue();</span>
+
+<span class="nc bnc" id="L50" title="All 2 branches missed.">			if (flagstatuscellValuestr.equalsIgnoreCase(&quot;Y&quot;)) {</span>
+<span class="nc" id="L51">				Cell descriptionCell = datarow.getCell(1);</span>
+<span class="nc" id="L52">				String descriptionCellValuestr = descriptionCell.getStringCellValue();</span>
+
+<span class="nc bnc" id="L54" title="All 2 branches missed.">				if (descriptionCellValuestr.equalsIgnoreCase(&quot;Sanity&quot;)) {</span>
+<span class="nc" id="L55">					Sheet sanitySheet = wb.getSheet(&quot;Sanity&quot;);</span>
+<span class="nc" id="L56">					int sanityNumberOfRows = sanitySheet.getPhysicalNumberOfRows();</span>
+<span class="nc" id="L57">					String packageCellValue = sanitySheet.getRow(0).getCell(2).getStringCellValue();</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">					for (int j = 1; j &lt; sanityNumberOfRows; j++) {</span>
+<span class="nc" id="L59">						Row sanitySheetrow = sanitySheet.getRow(j);</span>
+<span class="nc" id="L60">						Cell sanityflagstatuscell = sanitySheetrow.getCell(2);</span>
+<span class="nc" id="L61">						String sanityflagstatuscellValuestr = sanityflagstatuscell.getStringCellValue();</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">						if (sanityflagstatuscellValuestr.equalsIgnoreCase(&quot;Y&quot;)) {</span>
+<span class="nc" id="L63">							Cell sanityTestNameCell = sanitySheetrow.getCell(1);</span>
+<span class="nc" id="L64">							String classCellValue = sanityTestNameCell.getStringCellValue();</span>
+<span class="nc" id="L65">							testCellValue = packageCellValue + classCellValue;</span>
+
+						}
+					}
+
+<span class="nc" id="L70">				}</span>
+
+<span class="nc bnc" id="L72" title="All 2 branches missed.">				else if (descriptionCellValuestr.equalsIgnoreCase(&quot;Regression&quot;)) {</span>
+<span class="nc" id="L73">					Sheet regressionSheet = wb.getSheet(&quot;Regression&quot;);</span>
+<span class="nc" id="L74">					int regressionNumberOfRows = regressionSheet.getPhysicalNumberOfRows();</span>
+
+<span class="nc" id="L76">					String packageCellValue = regressionSheet.getRow(0).getCell(2).getStringCellValue();</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">					for (int k = 2; k &lt; regressionNumberOfRows; k++) {</span>
+<span class="nc" id="L78">						Row regressionSheetrow = regressionSheet.getRow(k);</span>
+<span class="nc" id="L79">						Cell regressionflagstatuscell = regressionSheetrow.getCell(2);</span>
+<span class="nc" id="L80">						String regressionflagstatuscellValuestr = regressionflagstatuscell.getStringCellValue();</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">						if (regressionflagstatuscellValuestr.equalsIgnoreCase(&quot;Y&quot;)) {</span>
+<span class="nc" id="L82">							Cell regressionTestNameCell = regressionSheetrow.getCell(1);</span>
+<span class="nc" id="L83">							String classCellValue = regressionTestNameCell.getStringCellValue();</span>
+<span class="nc" id="L84">							testCellValue = packageCellValue + classCellValue;</span>
+
+						}
+
+					}
+				}
+
+			}
+
+<span class="nc" id="L93">			list.add(testCellValue);</span>
+
+		}
+
+<span class="nc" id="L97">		return list;</span>
+
+	}
+	
+	
+		// *******READING ROW VALUES ********
+	public int excelReadTestCaseRowNo(String ExpectedTCid) throws IOException {
+
+<span class="fc" id="L105">		String path = System.getProperty(&quot;user.dir&quot;);</span>
+<span class="fc" id="L106">		testDataSheetPath = (path</span>
+				+ &quot;//src//main//java//com//Acertus_MetroLoad//automation//data//MTRL_Testdata.xlsx&quot;);
+
+<span class="fc" id="L109">		List&lt;String&gt; list = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L110">		File f = new File(testDataSheetPath);</span>
+<span class="fc" id="L111">		FileInputStream fis = new FileInputStream(f);</span>
+<span class="fc" id="L112">		Workbook wb = new XSSFWorkbook(fis);</span>
+<span class="fc" id="L113">		Sheet tocSheet = wb.getSheet(&quot;TOC&quot;);</span>
+<span class="fc" id="L114">		int numberOfRows = tocSheet.getPhysicalNumberOfRows();</span>
+<span class="fc" id="L115">		System.out.println(&quot;numberOfRows::&quot;+numberOfRows);</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		for (int i = 1; i &lt; numberOfRows; i++) {</span>
+
+<span class="fc" id="L118">			Row datarow = tocSheet.getRow(i);</span>
+<span class="fc" id="L119">			System.out.println(&quot;datarow::&quot;+datarow);</span>
+<span class="fc" id="L120">			Cell flagstatuscell = datarow.getCell(2);</span>
+<span class="fc" id="L121">			System.out.println(&quot;flagstatuscell::&quot;+flagstatuscell);</span>
+<span class="fc" id="L122">			String flagstatuscellValuestr = flagstatuscell.getStringCellValue();</span>
+<span class="fc" id="L123">			System.out.println(&quot;flagstatuscellValuestr:&quot;+flagstatuscellValuestr);</span>
+
+<span class="fc bfc" id="L125" title="All 2 branches covered.">			if (flagstatuscellValuestr.equalsIgnoreCase(&quot;Y&quot;)) {</span>
+<span class="fc" id="L126">				Cell descriptionCell = datarow.getCell(1);</span>
+<span class="fc" id="L127">				String descriptionCellValuestr = descriptionCell.getStringCellValue();</span>
+<span class="fc" id="L128">				System.out.println(&quot;descriptionCellValuestr::&quot;+descriptionCellValuestr);</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">				if (descriptionCellValuestr.equalsIgnoreCase(&quot;Sanity&quot;)) {</span>
+<span class="fc" id="L130">					Sheet sanitySheet = wb.getSheet(&quot;Sanity&quot;);</span>
+<span class="fc" id="L131">					int sanityNumberOfRows = sanitySheet.getPhysicalNumberOfRows();</span>
+<span class="fc" id="L132">					System.out.println(&quot;sanityNumberOfRows::&quot;+sanityNumberOfRows);</span>
+<span class="fc" id="L133">					String packageCellValue = sanitySheet.getRow(0).getCell(2).getStringCellValue();</span>
+<span class="fc" id="L134">					System.out.println(&quot;packageCellValue::&quot;+packageCellValue);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">					for (int j = 1; j &lt; sanityNumberOfRows; j++) {</span>
+<span class="fc" id="L136">						Row sanitySheetrow = sanitySheet.getRow(j);</span>
+<span class="fc" id="L137">						Cell sanityflagstatuscell = sanitySheetrow.getCell(2);</span>
+<span class="fc" id="L138">						System.out.println(&quot;sanityflagstatuscell::&quot;+sanityflagstatuscell);</span>
+<span class="fc" id="L139">						String sanityflagstatuscellValuestr = sanityflagstatuscell.getStringCellValue();</span>
+<span class="fc" id="L140">						System.out.println(&quot;sanityflagstatuscellValuestr::&quot;+sanityflagstatuscellValuestr);</span>
+<span class="fc" id="L141">						String sanityTestcaseId = sanitySheetrow.getCell(1).getStringCellValue();</span>
+<span class="fc" id="L142">						System.out.println(&quot;sanityTestcaseId::&quot;+sanityTestcaseId);</span>
+<span class="pc bpc" id="L143" title="1 of 4 branches missed.">						if (sanityflagstatuscellValuestr.equalsIgnoreCase(&quot;Y&quot;) &amp;&amp; sanityTestcaseId.equalsIgnoreCase(ExpectedTCid)) {</span>
+<span class="fc" id="L144">							rowValue = j;</span>
+<span class="fc" id="L145">							System.out.println(&quot;rowValue::&quot;+rowValue);</span>
+
+						}
+					}
+
+				}
+
+				
+
+			}
+
+			
+			
+		}
+
+<span class="fc" id="L160">		return rowValue;</span>
+
+	}
+
+	// ********READING BROWSER VALUE**********
+	public static String excelreadBrowser() throws IOException {
+
+<span class="nc" id="L167">		testConfigSheetPath = (System.getProperty(&quot;user.dir&quot;)</span>
+					+ &quot;//src//main//java//com//Acertus_MetroLoad//automation//config//Config.xlsx&quot;);
+<span class="nc" id="L169">		System.out.println(testConfigSheetPath);</span>
+<span class="nc" id="L170">		File f = new File(testConfigSheetPath);</span>
+<span class="nc" id="L171">		FileInputStream fis = new FileInputStream(f);</span>
+<span class="nc" id="L172">		Workbook wb = new XSSFWorkbook(fis);</span>
+<span class="nc" id="L173">		Sheet credsheet = wb.getSheet(&quot;configdata&quot;);</span>
+<span class="nc" id="L174">		Row datarow = credsheet.getRow(4);</span>
+<span class="nc" id="L175">		Cell datacell = datarow.getCell(2);</span>
+<span class="nc" id="L176">		int cellType = datacell.getCellType();</span>
+
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		if (cellType == 1) {</span>
+<span class="nc" id="L179">			browserCellValue = datacell.getStringCellValue();</span>
+		} else {
+<span class="nc" id="L181">			double numericCellValue = datacell.getNumericCellValue();</span>
+<span class="nc" id="L182">			int numericCellValueint = (int) numericCellValue;</span>
+<span class="nc" id="L183">			browserCellValue = Integer.toString(numericCellValueint);</span>
+		}
+
+<span class="nc" id="L186">		return browserCellValue;</span>
+	}
+
+	// *********************************READING URL
+	// VALUE***************************************************
+	public static String excelreadURL() throws IOException {
+
+<span class="nc" id="L193">		testConfigSheetPath = (System.getProperty(&quot;user.dir&quot;)</span>
+				+ &quot;//src//main//java//com//Acertus_MetroLoad//automation//config//Config.xlsx&quot;);
+<span class="nc" id="L195">		File f = new File(testConfigSheetPath);</span>
+<span class="nc" id="L196">		FileInputStream fis = new FileInputStream(f);</span>
+<span class="nc" id="L197">		Workbook wb = new XSSFWorkbook(fis);</span>
+<span class="nc" id="L198">		Sheet credsheet = wb.getSheet(&quot;configdata&quot;);</span>
+<span class="nc" id="L199">		Row datarow = credsheet.getRow(1);</span>
+<span class="nc" id="L200">		System.out.println(&quot;Row value&quot;+datarow);</span>
+<span class="nc" id="L201">		Cell datacell = datarow.getCell(2);</span>
+<span class="nc" id="L202">		System.out.println(&quot;Cell Value&quot;+datacell);</span>
+<span class="nc" id="L203">		int cellType = datacell.getCellType();</span>
+<span class="nc" id="L204">		System.out.println(&quot;Cell Type value&quot;+cellType);</span>
+
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (cellType == 1) {</span>
+<span class="nc" id="L207">			urlCellValue = datacell.getStringCellValue();</span>
+		} else {
+<span class="nc" id="L209">			double numericCellValue = datacell.getNumericCellValue();</span>
+<span class="nc" id="L210">			int numericCellValueint = (int) numericCellValue;</span>
+<span class="nc" id="L211">			urlCellValue = Integer.toString(numericCellValueint);</span>
+		}
+
+<span class="nc" id="L214">		return urlCellValue;</span>
+	}
+
+	public static int readCellVaueInteger(int rowNum) throws IOException {
+		
+<span class="fc" id="L219">		String path = System.getProperty(&quot;user.dir&quot;);</span>
+<span class="fc" id="L220">		testDataSheetPath = (path</span>
+				+ &quot;//src//main//java//com//Acertus_MetroLoad//automation//data//MTRL_Testdata.xlsx&quot;);
+
+<span class="fc" id="L223">		List&lt;String&gt; list = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L224">		File f = new File(testDataSheetPath);</span>
+<span class="fc" id="L225">		FileInputStream fis = new FileInputStream(f);</span>
+<span class="fc" id="L226">		Workbook wb = new XSSFWorkbook(fis);</span>
+<span class="fc" id="L227">		Sheet tocSheet = wb.getSheet(&quot;Sanity&quot;);</span>
+<span class="fc" id="L228">		int cellValue=(int)tocSheet.getRow(rowNum).getCell(3).getNumericCellValue();</span>
+<span class="fc" id="L229">		System.out.println(&quot;StringcellValue::&quot;+cellValue);</span>
+<span class="fc" id="L230">		return cellValue;</span>
+		
+	}
+	
+	
+	public static String readCellVaueString(int rowNum) throws IOException {
+		
+<span class="nc" id="L237">		String path = System.getProperty(&quot;user.dir&quot;);</span>
+<span class="nc" id="L238">		testDataSheetPath = (path</span>
+				+ &quot;//src//main//java//com//Acertus_MetroLoad//automation//data//MTRL_Testdata.xlsx&quot;);
+
+<span class="nc" id="L241">		List&lt;String&gt; list = new ArrayList&lt;String&gt;();</span>
+<span class="nc" id="L242">		File f = new File(testDataSheetPath);</span>
+<span class="nc" id="L243">		FileInputStream fis = new FileInputStream(f);</span>
+<span class="nc" id="L244">		Workbook wb = new XSSFWorkbook(fis);</span>
+<span class="nc" id="L245">		Sheet tocSheet = wb.getSheet(&quot;Sanity&quot;);</span>
+<span class="nc" id="L246">		String cellValue=tocSheet.getRow(rowNum).getCell(3).getStringCellValue();</span>
+<span class="nc" id="L247">		System.out.println(&quot;StringcellValue::&quot;+cellValue);</span>
+<span class="nc" id="L248">		return cellValue;</span>
+		
+	}
+	public static String excelreadURL1(String env) throws IOException {
+
+<span class="nc" id="L253">		testConfigSheetPath = (System.getProperty(&quot;user.dir&quot;)</span>
+				+ &quot;//src//main//java//com//Acertus_MetroLoad//automation//config//Config.xlsx&quot;);
+<span class="nc" id="L255">		File f = new File(testConfigSheetPath);</span>
+<span class="nc" id="L256">		FileInputStream fis = new FileInputStream(f);</span>
+<span class="nc" id="L257">		Workbook wb = new XSSFWorkbook(fis);</span>
+<span class="nc" id="L258">		Sheet credsheet = wb.getSheet(&quot;configdata&quot;);</span>
+<span class="nc bnc" id="L259" title="All 2 branches missed.">		if(env.equals(&quot;Stage3&quot;))</span>
+		{	
+			
+<span class="nc" id="L262">				Row datarow = credsheet.getRow(5);</span>
+<span class="nc" id="L263">				System.out.println(&quot;Row value&quot;+datarow);</span>
+<span class="nc" id="L264">				Cell datacell = datarow.getCell(2);</span>
+<span class="nc" id="L265">				System.out.println(&quot;Cell Value&quot;+datacell);</span>
+<span class="nc" id="L266">				int cellType = datacell.getCellType();</span>
+<span class="nc" id="L267">				System.out.println(&quot;Cell Type value&quot;+cellType);</span>
+		
+<span class="nc bnc" id="L269" title="All 2 branches missed.">				if (cellType == 1) {</span>
+<span class="nc" id="L270">					urlCellValue = datacell.getStringCellValue();</span>
+				} else {
+<span class="nc" id="L272">					double numericCellValue = datacell.getNumericCellValue();</span>
+<span class="nc" id="L273">					int numericCellValueint = (int) numericCellValue;</span>
+<span class="nc" id="L274">					urlCellValue = Integer.toString(numericCellValueint);</span>
+				}
+		
+				//return urlCellValue;
+		
+<span class="nc" id="L279">		}</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">		else if(env.equals(&quot;Stage2&quot;))</span>
+		{	
+			
+<span class="nc" id="L283">			Row datarow = credsheet.getRow(6);</span>
+<span class="nc" id="L284">			System.out.println(&quot;Row value&quot;+datarow);</span>
+<span class="nc" id="L285">			Cell datacell = datarow.getCell(2);</span>
+<span class="nc" id="L286">			System.out.println(&quot;Cell Value&quot;+datacell);</span>
+<span class="nc" id="L287">			int cellType = datacell.getCellType();</span>
+<span class="nc" id="L288">			System.out.println(&quot;Cell Type value&quot;+cellType);</span>
+	
+<span class="nc bnc" id="L290" title="All 2 branches missed.">			if (cellType == 1) {</span>
+<span class="nc" id="L291">				urlCellValue = datacell.getStringCellValue();</span>
+			} else {
+<span class="nc" id="L293">				double numericCellValue = datacell.getNumericCellValue();</span>
+<span class="nc" id="L294">				int numericCellValueint = (int) numericCellValue;</span>
+<span class="nc" id="L295">				urlCellValue = Integer.toString(numericCellValueint);</span>
+			}
+	
+			//return urlCellValue;
+	
+<span class="nc" id="L300">		}</span>
+		
+		
+<span class="nc bnc" id="L303" title="All 2 branches missed.">		else if(env.equals(&quot;Staging&quot;))</span>
+		{	
+			
+<span class="nc" id="L306">			Row datarow = credsheet.getRow(8);</span>
+<span class="nc" id="L307">			System.out.println(&quot;Row value&quot;+datarow);</span>
+<span class="nc" id="L308">			Cell datacell = datarow.getCell(2);</span>
+<span class="nc" id="L309">			System.out.println(&quot;Cell Value&quot;+datacell);</span>
+<span class="nc" id="L310">			int cellType = datacell.getCellType();</span>
+<span class="nc" id="L311">			System.out.println(&quot;Cell Type value&quot;+cellType);</span>
+	
+<span class="nc bnc" id="L313" title="All 2 branches missed.">			if (cellType == 1) {</span>
+<span class="nc" id="L314">				urlCellValue = datacell.getStringCellValue();</span>
+			} else {
+<span class="nc" id="L316">				double numericCellValue = datacell.getNumericCellValue();</span>
+<span class="nc" id="L317">				int numericCellValueint = (int) numericCellValue;</span>
+<span class="nc" id="L318">				urlCellValue = Integer.toString(numericCellValueint);</span>
+			}
+	
+			//return urlCellValue;
+	
+<span class="nc" id="L323">		}</span>
+		
+<span class="nc bnc" id="L325" title="All 2 branches missed.">		else if(env.equals(&quot;Prod&quot;))</span>
+		{	
+			
+<span class="nc" id="L328">			Row datarow = credsheet.getRow(7);</span>
+<span class="nc" id="L329">			System.out.println(&quot;Row value&quot;+datarow);</span>
+<span class="nc" id="L330">			Cell datacell = datarow.getCell(2);</span>
+<span class="nc" id="L331">			System.out.println(&quot;Cell Value&quot;+datacell);</span>
+<span class="nc" id="L332">			int cellType = datacell.getCellType();</span>
+<span class="nc" id="L333">			System.out.println(&quot;Cell Type value&quot;+cellType);</span>
+	
+<span class="nc bnc" id="L335" title="All 2 branches missed.">			if (cellType == 1) {</span>
+<span class="nc" id="L336">				urlCellValue = datacell.getStringCellValue();</span>
+			} else {
+<span class="nc" id="L338">				double numericCellValue = datacell.getNumericCellValue();</span>
+<span class="nc" id="L339">				int numericCellValueint = (int) numericCellValue;</span>
+<span class="nc" id="L340">				urlCellValue = Integer.toString(numericCellValueint);</span>
+			}
+	
+			//return urlCellValue;
+	
+		}
+		
+<span class="nc" id="L347">		return urlCellValue;</span>
+		
+	}
+	
+	
+	
+	// ********READING USERNAME VALUE********
+	public static String excelreadUserName() throws IOException {
+
+<span class="nc" id="L356">		testConfigSheetPath = (System.getProperty(&quot;user.dir&quot;)</span>
+				+ &quot;//src//main//java//com//Acertus_MetroLoad//automation//config//Config.xlsx&quot;);
+<span class="nc" id="L358">		File f = new File(testConfigSheetPath);</span>
+<span class="nc" id="L359">		FileInputStream fis = new FileInputStream(f);</span>
+<span class="nc" id="L360">		Workbook wb = new XSSFWorkbook(fis);</span>
+<span class="nc" id="L361">		Sheet credsheet = wb.getSheet(&quot;configdata&quot;);</span>
+<span class="nc" id="L362">		Row datarow = credsheet.getRow(2);</span>
+<span class="nc" id="L363">		Cell datacell = datarow.getCell(2);</span>
+<span class="nc" id="L364">		int cellType = datacell.getCellType();</span>
+
+<span class="nc bnc" id="L366" title="All 2 branches missed.">		if (cellType == 1) {</span>
+<span class="nc" id="L367">			userNameCellValue = datacell.getStringCellValue();</span>
+		} else {
+<span class="nc" id="L369">			double numericCellValue = datacell.getNumericCellValue();</span>
+<span class="nc" id="L370">			int numericCellValueint = (int) numericCellValue;</span>
+<span class="nc" id="L371">			userNameCellValue = Integer.toString(numericCellValueint);</span>
+		}
+
+<span class="nc" id="L374">		return userNameCellValue;</span>
+	}
+
+//*********************************READING PASSWORD VALUE***************************************************
+
+	public static String excelreadPassword() throws IOException {
+
+<span class="nc" id="L381">		testConfigSheetPath = (System.getProperty(&quot;user.dir&quot;)</span>
+				+ &quot;//src//main//java//com//Acertus_MetroLoad//automation//config//Config.xlsx&quot;);
+<span class="nc" id="L383">		File f = new File(testConfigSheetPath);</span>
+<span class="nc" id="L384">		FileInputStream fis = new FileInputStream(f);</span>
+<span class="nc" id="L385">		Workbook wb = new XSSFWorkbook(fis);</span>
+<span class="nc" id="L386">		Sheet credsheet = wb.getSheet(&quot;configdata&quot;);</span>
+<span class="nc" id="L387">		Row datarow = credsheet.getRow(3);</span>
+<span class="nc" id="L388">		Cell datacell = datarow.getCell(2);</span>
+<span class="nc" id="L389">		int cellType = datacell.getCellType();</span>
+
+<span class="nc bnc" id="L391" title="All 2 branches missed.">		if (cellType == 0) {</span>
+<span class="nc" id="L392">			double numericCellValue = datacell.getNumericCellValue();</span>
+<span class="nc" id="L393">			int numericCellValueint = (int) numericCellValue;</span>
+<span class="nc" id="L394">			passwordCellValue = Integer.toString(numericCellValueint);</span>
+<span class="nc bnc" id="L395" title="All 2 branches missed.">		} else if (cellType == 1) {</span>
+<span class="nc" id="L396">			passwordCellValue = datacell.getStringCellValue();</span>
+		} else {
+<span class="nc" id="L398">			System.out.println(&quot;Formula: &quot; + datacell.getCellFormula());</span>
+<span class="nc" id="L399">			int cachedFormulaResultType = datacell.getCachedFormulaResultType();</span>
+<span class="nc bnc" id="L400" title="All 2 branches missed.">			if (cachedFormulaResultType == 1) {</span>
+<span class="nc" id="L401">				passwordCellValue = datacell.getStringCellValue();</span>
+			} else {
+<span class="nc" id="L403">				double numericCellValue = datacell.getNumericCellValue();</span>
+<span class="nc" id="L404">				int numericCellValueint = (int) numericCellValue;</span>
+<span class="nc" id="L405">				passwordCellValue = Integer.toString(numericCellValueint);</span>
+			}
+		}
+
+<span class="nc" id="L409">		return passwordCellValue;</span>
+
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

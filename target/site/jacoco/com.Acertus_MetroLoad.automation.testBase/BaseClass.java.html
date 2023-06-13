@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BaseClass.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Acertus_MetroLoad_Automation_v001</a> &gt; <a href="index.source.html" class="el_package">com.Acertus_MetroLoad.automation.testBase</a> &gt; <span class="el_source">BaseClass.java</span></div><h1>BaseClass.java</h1><pre class="source lang-java linenums">/* Name: BaseClass 
+ * Description: This script is for Reusable Methods
+ * Developed By: Radhe Singh
+ * Automation Architect: Radhe Singh
+ */
+
+
+package com.Acertus_MetroLoad.automation.testBase;
+
+
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+
+import com.Acertus_MetroLoad.automation.excelReader.ExcelUtils;
+import com.Acertus_MetroLoad.automation.objRepo.ObjectRepository_LoginPage;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+<span class="fc" id="L58">public class BaseClass {</span>
+	
+	public static WebDriver driver; //commented for using threadLocal at line no 67. Uncomment if not using threadlocal
+	public static WebDriverWait wait;
+	
+	public static EnvVariableClass ev;
+	public static Properties prop;
+	public static ObjectRepository_LoginPage or;
+	public static String URL;
+	
+
+	
+	public static void launchBrowser() throws IOException {
+		
+		//String browsername = ExcelUtils.excelreadBrowser();
+<span class="fc" id="L73">		System.out.println(&quot;Before reading browser name&quot;);</span>
+<span class="fc" id="L74">		String browsername=prop.getProperty(&quot;browser&quot;).trim();</span>
+<span class="fc" id="L75">		System.out.println(&quot;Browser Type: &quot;+browsername);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (browsername.equalsIgnoreCase(&quot;CHROME&quot;)) {</span>
+			try {
+				
+//				ChromeOptions options = new ChromeOptions();
+//				options.addArguments(&quot;--disable-web-security&quot;);
+//				options.addArguments(&quot;--disable-gpu&quot;);
+//				options.addArguments(&quot;--user-data-dir=~/chromeTemp&quot;);
+//				
+<span class="fc" id="L84">     				WebDriverManager.chromedriver().setup();</span>
+		            //ChromeOptions options = new ChromeOptions();
+		            //options.addArguments(&quot;--incognito&quot;);
+		            
+//		            options.addArguments(&quot;test-type&quot;);
+//		            options.addArguments(&quot;--start-maximized&quot;);
+//		            options.addArguments(&quot;--disable-web-security&quot;);
+//		            options.addArguments(&quot;--allow-running-insecure-content&quot;);
+		            //DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+		            //capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+//		            driver = new ChromeDriver(capabilities);		
+     			
+     				
+<span class="fc" id="L97">		       driver = new ChromeDriver();</span>
+<span class="fc" id="L98">				driver.manage().window().maximize();</span>
+<span class="fc" id="L99">				driver.manage().deleteAllCookies();</span>
+<span class="fc" id="L100">				driver.manage().deleteAllCookies();</span>
+<span class="fc" id="L101">				System.out.println(&quot;[PASSED]&quot; + browsername + &quot;browser launched maximized successfully&quot;);</span>
+			} 
+<span class="nc" id="L103">			catch (Exception e) </span>
+			{
+<span class="nc" id="L105">				System.err.println(&quot;[ERROR] Unable to launch &quot; + browsername + e.toString());</span>
+<span class="fc" id="L106">			}}</span>
+//		} else if (browsername.equalsIgnoreCase(&quot;FIREFOX&quot;)) {
+//			try {
+//				WebDriverManager.firefoxdriver().setup();
+//				driver = new FirefoxDriver();
+//				driver.manage().window().maximize();
+//				System.out.println(&quot;[PASSED]&quot; + browsername + &quot;browser launched and maximized successfully&quot;);
+//			} catch (Exception e) {
+//				System.err.println(&quot;[ERROR] Unable to launch &quot; + browsername + e.toString());
+//			}
+//		}
+//
+//		else if (browsername.equalsIgnoreCase(&quot;EDGE&quot;)) {
+//			try {
+//				WebDriverManager.edgedriver().setup();
+//				driver = new EdgeDriver();
+//				driver.manage().window().maximize();
+//				System.out.println(&quot;[PASSED]&quot; + browsername + &quot;browser launched and maximized successfully&quot;);
+//			} catch (Exception e) {
+//				System.err.println(&quot;[ERROR] Unable to launch &quot; + browsername + e.toString());
+//			}
+//		}
+//
+//		else if (browsername.equalsIgnoreCase(&quot;IE&quot;)) {
+//			try {
+//				WebDriverManager.iedriver().setup();
+//				driver = new InternetExplorerDriver();
+//				driver.manage().window().maximize();
+//				System.out.println(&quot;[PASSED]&quot; + browsername + &quot;browser launched and maximized successfully&quot;);
+//			} catch (Exception e) {
+//				System.err.println(&quot;[ERROR] Unable to launch &quot; + browsername + e.toString());
+//			}
+//		}
+//
+//		else {
+//			throw new RuntimeException(&quot;[FAILED] Unable to launch chrome, firefox, edge and ie browsers&quot;);
+//		}
+            
+<span class="fc" id="L144">	}</span>
+
+
+	public static String getScreenshotpath(String filename) throws IOException {
+<span class="nc" id="L148">		TakesScreenshot ts = (TakesScreenshot) driver;</span>
+<span class="nc" id="L149">		File src = ts.getScreenshotAs(OutputType.FILE);</span>
+<span class="nc" id="L150">		String despath = System.getProperty(&quot;user.dir&quot;) + &quot;\\reports\\&quot; + filename + &quot;.jpg&quot;;</span>
+<span class="nc" id="L151">		File des = new File(despath);</span>
+<span class="nc" id="L152">		FileUtils.copyFile(src, des);</span>
+<span class="nc" id="L153">		return despath;</span>
+	}
+
+	public static void launchURL() throws IOException {
+		
+<span class="fc" id="L158">		URL=prop.getProperty(ev.ENV_VALUE);</span>
+		try {
+<span class="fc" id="L160">			driver.get(URL);</span>
+
+<span class="nc" id="L162">		} catch (Exception e) {</span>
+<span class="nc" id="L163">			System.err.println(&quot;[ERROR] Unable to launch&quot; + URL + e.toString());</span>
+<span class="fc" id="L164">		}</span>
+<span class="fc" id="L165">	}</span>
+	
+	public static Properties init_configProp() throws IOException {
+		
+		try {
+<span class="fc" id="L170">			FileInputStream file=new FileInputStream(&quot;./Resources/config.properties&quot;);</span>
+<span class="fc" id="L171">			prop=new Properties();</span>
+<span class="fc" id="L172">			prop.load(file);</span>
+		} 
+<span class="nc" id="L174">		catch (FileNotFoundException e) {</span>
+<span class="nc" id="L175">			System.err.println(&quot;[ERROR] Unable to read properties file&quot;+ e.toString());</span>
+			
+<span class="fc" id="L177">		}</span>
+		
+<span class="fc" id="L179">		return prop;</span>
+		
+	}
+	
+		public String readURL() throws IOException {
+<span class="nc" id="L184">			return ExcelUtils.excelreadURL();</span>
+		}
+	
+	
+	
+		public String returnelementTxt(WebElement webelement) {
+		
+<span class="nc" id="L191">		String updatecardtxt= webelement.getText().toString();</span>
+<span class="nc" id="L192">		return updatecardtxt;</span>
+		
+		}
+
+	public static void inputtext(WebElement webelemeref, String txt) {
+<span class="fc" id="L197">		webelemeref.sendKeys(txt);</span>
+
+<span class="fc" id="L199">	}</span>
+
+	public static void inputtextLoginPassword(WebElement webelemeref, String txt) {
+<span class="nc" id="L202">		webelemeref.sendKeys(txt);</span>
+
+<span class="nc" id="L204">	}</span>
+
+	public static void clickelement(WebElement webelemeref) {
+<span class="fc" id="L207">		webelemeref.click();</span>
+
+<span class="fc" id="L209">	}</span>
+
+	public void impwait() throws InterruptedException {
+<span class="fc" id="L212">		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);</span>
+		
+		
+
+<span class="fc" id="L216">	}</span>
+
+	public void expwaitVisibility(WebElement webelementref) {
+<span class="fc" id="L219">		wait = new WebDriverWait(driver, 10);</span>
+<span class="fc" id="L220">		wait.until(ExpectedConditions.visibilityOf(webelementref));</span>
+<span class="fc" id="L221">	}</span>
+
+	public void expwaitClickable(WebElement webelementref) {
+<span class="nc" id="L224">		wait = new WebDriverWait(driver, 10);</span>
+<span class="nc" id="L225">		wait.until(ExpectedConditions.elementToBeClickable(webelementref));</span>
+<span class="nc" id="L226">	}</span>
+	
+	public void windowScroll() {
+<span class="nc" id="L229">		JavascriptExecutor js = (JavascriptExecutor)driver;</span>
+<span class="nc" id="L230">		js.executeScript(&quot;window.scrollBy(0,500)&quot;,&quot;&quot;);</span>
+<span class="nc" id="L231">	}</span>
+	
+	public void longwindowScroll() {
+<span class="nc" id="L234">		JavascriptExecutor js = (JavascriptExecutor)driver;</span>
+<span class="nc" id="L235">		js.executeScript(&quot;window.scrollBy(0,2000)&quot;,&quot;&quot;);</span>
+<span class="nc" id="L236">	}</span>
+	
+	public void allThewayPageDown() throws AWTException {
+<span class="nc" id="L239">		Robot robot=new Robot();</span>
+<span class="nc" id="L240">		robot.keyPress(KeyEvent.VK_CONTROL);</span>
+<span class="nc" id="L241">		robot.keyPress(KeyEvent.VK_END);</span>
+<span class="nc" id="L242">		robot.keyRelease(KeyEvent.VK_END);</span>
+<span class="nc" id="L243">		robot.keyRelease(KeyEvent.VK_CONTROL);</span>
+		
+<span class="nc" id="L245">	}</span>
+	
+	public void waitSync() throws InterruptedException {
+<span class="nc" id="L248">		Thread.sleep(10000);</span>
+<span class="nc" id="L249">	}</span>
+	
+	public void shortWaitSync() throws InterruptedException {
+<span class="fc" id="L252">		Thread.sleep(5000);</span>
+<span class="fc" id="L253">	}</span>
+	
+	public boolean isDisplayed(WebElement webelementref) {
+		
+<span class="nc" id="L257">		boolean flag = webelementref.isDisplayed();</span>
+<span class="nc" id="L258">		return flag;</span>
+		
+	}
+	
+	public void logout() throws InterruptedException {
+		
+<span class="nc" id="L264">		JSclickelement(or.logout_lnk);</span>
+<span class="nc" id="L265">		shortWaitSync();</span>
+<span class="nc" id="L266">	}</span>
+	
+	public void tearDown()
+	{
+//		ExtReportToPDF pdfReport=new ExtReportToPDF();
+//		pdfReport.convertTopdf();
+<span class="nc" id="L272">		driver.manage().deleteAllCookies();</span>
+<span class="nc" id="L273">		driver.close();</span>
+<span class="nc" id="L274">	}</span>
+	
+	public void login() throws InterruptedException, IOException {
+		
+		
+		
+<span class="fc" id="L280">		 or = new ObjectRepository_LoginPage();</span>
+<span class="fc" id="L281">		PageFactory.initElements(driver, or);</span>
+		
+		try {
+<span class="fc" id="L284">			expwaitVisibility(or.userID);</span>
+<span class="fc" id="L285">			System.out.println(&quot;[PASSED]&quot; + &quot;Showing Login screen&quot;);</span>
+<span class="nc" id="L286">		} catch (Exception e) {</span>
+<span class="nc" id="L287">			throw new RuntimeException(&quot;[FAILED] Not showing Login screen&quot;);</span>
+<span class="fc" id="L288">		}</span>
+<span class="fc" id="L289">		inputtext(or.userID, prop.getProperty(&quot;metroloadID&quot;));</span>
+<span class="fc" id="L290">		shortWaitSync();</span>
+<span class="fc" id="L291">		inputtext(or.userPwd, prop.getProperty(&quot;metroloadPWD&quot;));</span>
+<span class="fc" id="L292">		shortWaitSync();</span>
+<span class="fc" id="L293">		clickelement(or.login_btn);</span>
+<span class="fc" id="L294">		System.out.println(&quot;Login Successfull with user ID::&quot;+prop.getProperty(&quot;metroloadID&quot;));</span>
+<span class="fc" id="L295">		String homeTitle=or.login_title.getText();</span>
+<span class="fc" id="L296">		System.out.println(&quot;Home page title is: &quot;+homeTitle);</span>
+<span class="fc" id="L297">	}</span>
+	
+	public void JSclickelement(WebElement webelemeref) {
+		
+<span class="fc" id="L301">		JavascriptExecutor js = (JavascriptExecutor) driver;</span>
+<span class="fc" id="L302">		js.executeScript(&quot;arguments[0].click();&quot;,webelemeref);</span>
+		
+<span class="fc" id="L304">	}</span>
+	
+	
+
+	public void lookUp_LoadID(String TCno, int row) throws InterruptedException, IOException {
+		
+<span class="fc" id="L310">		int loadID=ExcelUtils.readCellVaueInteger(row);</span>
+<span class="fc" id="L311">		System.out.println(&quot;lookUp LoadID:&quot;+loadID);</span>
+<span class="fc" id="L312">		JSclickelement(or.searhID_btn);</span>
+<span class="fc" id="L313">		JSclickelement(or.loadID_txtbox);</span>
+<span class="fc" id="L314">		or.loadID_txtbox.sendKeys(String.valueOf(loadID));</span>
+<span class="fc" id="L315">		shortWaitSync();</span>
+<span class="fc" id="L316">		clickelement(or.searchByID_btn);</span>
+<span class="fc" id="L317">		impwait();</span>
+<span class="fc" id="L318">		String exp_loaddetails=&quot;Load Unavailable&quot;;</span>
+<span class="fc" id="L319">		String act_loaddetails=or.unavail_loadmsg.getText();</span>
+<span class="pc bpc" id="L320" title="1 of 2 branches missed.">		if(exp_loaddetails.equals(act_loaddetails)) {</span>
+			
+<span class="fc" id="L322">			clickelement(or.unavail_loadmsg_loadBoard_btn);</span>
+			
+		}
+		
+		else {
+			
+		}
+<span class="fc" id="L329">	}</span>
+	
+	
+	
+	public String currentDateTime() {
+		
+<span class="nc" id="L335">		DateFormat dateformat= new SimpleDateFormat(&quot;DD&quot;);</span>
+<span class="nc" id="L336">		Date date= new Date();</span>
+<span class="nc" id="L337">		String currentDate=dateformat.format(date);</span>
+<span class="nc" id="L338">		System.out.println(&quot;currentDateTime==&quot;+currentDate);</span>
+<span class="nc" id="L339">		return currentDate;</span>
+	}
+	
+		
+
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

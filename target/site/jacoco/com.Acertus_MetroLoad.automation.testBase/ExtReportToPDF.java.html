@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExtReportToPDF.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Acertus_MetroLoad_Automation_v001</a> &gt; <a href="index.source.html" class="el_package">com.Acertus_MetroLoad.automation.testBase</a> &gt; <span class="el_source">ExtReportToPDF.java</span></div><h1>ExtReportToPDF.java</h1><pre class="source lang-java linenums">/* Name: ExtReportToPDF Script 
+ * Description: This script is used to convert Extent report to Pdf
+ * Developed By: Radhe Singh
+ * Automation Architect: Radhe Singh
+ */
+package com.Acertus_MetroLoad.automation.testBase;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
+
+import org.apache.commons.io.FileUtils;
+import org.xhtmlrenderer.pdf.ITextRenderer;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
+<span class="nc" id="L20">public class ExtReportToPDF {</span>
+	
+<span class="nc" id="L22">	String userDir=System.getProperty(&quot;user.dir&quot;);</span>
+<span class="nc" id="L23">	String htmlReportPath=userDir+&quot;\\Reports\\AutomationTestReport.html&quot;;</span>
+<span class="nc" id="L24">	String pdfReportPath=userDir+&quot;\\Reports\\AutomationTestReport.pdf&quot;;</span>
+	
+	public void convertTopdf() {
+			try {
+//				//Created PDF document
+//				Document doc=new Document();
+//				PdfWriter pwriter= PdfWriter.getInstance(doc, new FileOutputStream(pdfReportPath));
+//				doc.open();
+//				//Read HTML Report
+//				InputStream inStream= new FileInputStream(htmlReportPath);
+//				//Converted to PDF
+//				XMLWorkerHelper.getInstance().parseXHtml(pwriter, doc, inStream);
+//				doc.close();
+//				System.out.println(&quot;PDF report generated Successfully&quot;);
+				
+				
+	            // Create an ITextRenderer instance
+<span class="nc" id="L41">	            ITextRenderer renderer = new ITextRenderer();</span>
+	            // Read the HTML report file
+<span class="nc" id="L43">	            String htmlContent = FileUtils.readFileToString(new File(htmlReportPath), &quot;UTF-8&quot;);</span>
+	            // Parse and render the HTML to PDF
+<span class="nc" id="L45">	            renderer.setDocumentFromString(htmlContent);</span>
+<span class="nc" id="L46">	            renderer.layout();</span>
+	            // Create the output stream for the PDF file
+<span class="nc" id="L48">	            FileOutputStream outputStream = new FileOutputStream(pdfReportPath);</span>
+	            // Generate the PDF file
+<span class="nc" id="L50">	            renderer.createPDF(outputStream);           // Close the output stream</span>
+<span class="nc" id="L51">	            outputStream.close();</span>
+				
+<span class="nc" id="L53">	            System.out.println(&quot;PDF report generated successfully.&quot;);</span>
+				
+			}
+<span class="nc" id="L56">			catch(Exception e) </span>
+			{
+				
+<span class="nc" id="L59">				System.out.println(&quot;Failed to generate PDF report&quot;+e.getMessage().toString());</span>
+<span class="nc" id="L60">			}</span>
+			
+<span class="nc" id="L62">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
