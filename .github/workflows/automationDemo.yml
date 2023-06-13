@@ -4,7 +4,7 @@ name: MetroloadSmokeAutomation
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [master]
 
 jobs:
   build:
@@ -21,4 +21,4 @@ jobs:
 
       - name: Build with Maven
         run: |
-          mvn surefire:test install -DappEnv=metroloadStage
+          mvn surefire:test -DappEnv=metroloadStage
