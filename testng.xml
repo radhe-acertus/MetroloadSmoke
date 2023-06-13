@@ -11,7 +11,7 @@
 	       <test thread-count="5" name="Test"  verbose="2" >
 	       <parameter name="Environment" value="Stage"/>
 				<classes> 
-				  <!--   <class name="com.Acertus_MetroLoad.automation.testCases.TC_loginMetroload"/>-->
+				  <class name="com.Acertus_MetroLoad.automation.testCases.TC_loginMetroload"/>
 				 <class name="com.Acertus_MetroLoad.automation.testCases.TC_searchOrderUs__loadOrder"/>
 				</classes>
           
