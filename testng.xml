@@ -13,6 +13,7 @@
 				<classes> 
 				  <class name="com.Acertus_MetroLoad.automation.testCases.TC_loginMetroload"/>
 				 <class name="com.Acertus_MetroLoad.automation.testCases.TC_searchOrderUs__loadOrder"/>
+				 <class name="com.Acertus_MetroLoad.automation.testCases.TC_loginMetroload"/>
 				</classes>
           
 

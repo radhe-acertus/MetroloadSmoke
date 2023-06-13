@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+<testng-results ignored="0" total="2" passed="2" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2023-06-13T13:10:59 CDT" name="Suite" finished-at="2023-06-13T13:11:55 CDT" duration-ms="55963">
+  <suite started-at="2023-06-13T16:51:18 CDT" name="Suite" finished-at="2023-06-13T16:52:22 CDT" duration-ms="63967">
     <groups>
     </groups>
-    <test started-at="2023-06-13T13:10:59 CDT" name="Test" finished-at="2023-06-13T13:11:55 CDT" duration-ms="55963">
+    <test started-at="2023-06-13T16:51:18 CDT" name="Test" finished-at="2023-06-13T16:52:22 CDT" duration-ms="63967">
+      <class name="com.Acertus_MetroLoad.automation.testCases.TC_loginMetroload">
+        <test-method signature="loginMetroloadValidCredentials()[pri:0, instance:com.Acertus_MetroLoad.automation.testCases.TC_loginMetroload@2dba05b1]" started-at="2023-06-13T16:51:18 CDT" name="loginMetroloadValidCredentials" finished-at="2023-06-13T16:51:53 CDT" duration-ms="34707" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loginMetroloadValidCredentials -->
+      </class> <!-- com.Acertus_MetroLoad.automation.testCases.TC_loginMetroload -->
       <class name="com.Acertus_MetroLoad.automation.testCases.TC_searchOrderUs__loadOrder">
-        <test-method signature="searchOrderUs__loadOrder()[pri:0, instance:com.Acertus_MetroLoad.automation.testCases.TC_searchOrderUs__loadOrder@38883a31]" started-at="2023-06-13T13:10:59 CDT" name="searchOrderUs__loadOrder" finished-at="2023-06-13T13:11:55 CDT" duration-ms="55546" status="PASS">
+        <test-method signature="searchOrderUs__loadOrder()[pri:0, instance:com.Acertus_MetroLoad.automation.testCases.TC_searchOrderUs__loadOrder@74c9e11]" started-at="2023-06-13T16:51:53 CDT" name="searchOrderUs__loadOrder" finished-at="2023-06-13T16:52:22 CDT" duration-ms="29029" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- searchOrderUs__loadOrder -->
